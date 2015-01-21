@@ -17,7 +17,7 @@ class Board
 	def initialize(player1, player2)
 		@player1 = Player.new(player1, 'X')
 		@player2 = Player.new(player2, 'O')
-		@board = [[0,1,2],[3,4,5],[6,7,8]]
+		@board = [[0,1,"O"],[3,"O",5],[6,7,8]]
 	end
 
 	def show_board
@@ -34,7 +34,22 @@ class Board
 	end
 
 	def victory?
-		check_rows || check_columns || check_diagonals
+		check_rows || check_columns || check_diagonals || board_full
+	end
+
+	def board_full
+		if check_board
+			puts "It's a draw."
+			true
+		end
+	end
+
+	def check_board
+		@board.all? do |row|
+			row.all? do |num|
+				(num == "X") || (num == "O")
+			end
+		end
 	end
 
 	def check_columns
@@ -81,4 +96,4 @@ while !victory
 	victory = game.victory?	
 end
 
-puts "Good game!"
+puts "Play again?"
